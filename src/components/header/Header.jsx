@@ -159,10 +159,10 @@ const Header = () => {
           )}
         </div>
       </nav>
-      
+
       {menuOpen && (
         <div className="md:hidden">
-          <div className="fixed inset-0 bg-gray-900 bg-opacity-75 z-50"></div>
+          <div className="fixed inset-0 backdrop-blur-sm bg-gray-900 bg-opacity-75 z-50"></div>
           <div className="fixed inset-y-0 right-0 max-w-xs w-3/5 bg-gray-800 z-50">
             <div className="flex items-center justify-end p-4">
               <button
@@ -229,7 +229,7 @@ const Header = () => {
                   onClick={() => {
                     navigate("/login");
                   }}
-                  className="flex text-white w-full justify-center mt-[18rem] hover:bg-gray-900 py-3 px-5 mx-4 rounded-md"
+                  className="flex text-white w-full justify-center mt-[18rem] hover:bg-gray-900 py-3 px-5  rounded-md"
                 >
                   Login
                 </button>
