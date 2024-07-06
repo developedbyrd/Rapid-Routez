@@ -77,12 +77,12 @@ const Header = () => {
     // </header>
 
     <header className="bg-zinc-100 text-gray-800 shadow-sm">
-      <nav className="container mx-auto flex justify-between items-center py-4 px-4 sm:px-36 font-apercu">
+      <nav className="container mx-auto flex justify-between max-w-[1170px] items-center py-4 px-4 font-apercu">
         <Link to="/home" className="text-xl font-semibold">
           Rapid Routez
         </Link>
         {/* Hamburger icon */}
-        <div className="block sm:hidden">
+        <div className="block md:hidden">
           <button
             onClick={toggleMenu}
             className="text-gray-600 focus:outline-none focus:text-gray-900"
@@ -105,7 +105,7 @@ const Header = () => {
           </button>
         </div>
         {/* Desktop menu */}
-        <div className="hidden sm:flex gap-5">
+        <div className="hidden md:flex">
           <Link
             to="/home"
             className="hover:text-white hover:bg-[#0c0c0c] px-3 py-[2px] transition-colors rounded duration-200"
@@ -161,7 +161,7 @@ const Header = () => {
       </nav>
       
       {menuOpen && (
-        <div className="sm:hidden">
+        <div className="md:hidden">
           <div className="fixed inset-0 bg-gray-900 bg-opacity-75 z-50"></div>
           <div className="fixed inset-y-0 right-0 max-w-xs w-3/5 bg-gray-800 z-50">
             <div className="flex items-center justify-end p-4">
