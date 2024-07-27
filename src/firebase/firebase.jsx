@@ -66,7 +66,7 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_APP_FB_API_KEY,
+  apiKey: "AIzaSyDQvdRCgme97we6-tF38oD_4KLZ7orbuBA",
   authDomain: import.meta.env.VITE_APP_FB_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_APP_FB_PROJECT_ID,
   storageBucket: import.meta.env.VITE_APP_FB_STORAGE_BUCKET,
