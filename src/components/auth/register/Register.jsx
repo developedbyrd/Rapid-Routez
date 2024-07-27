@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Register.css";
 import { Navigate, Link } from "react-router-dom";
 import { firestoreDB, doc, setDoc } from "../../../firebase/firebase";
@@ -16,24 +16,28 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const { userLoggedIn, currentUser } = useAuth();
 
-  const addUserToFirestore = async (uid, fullName, email, phoneNumber) => {
+  useEffect(() => {
+    if (currentUser) {
+      addUserToFirestore(fullName, email, phoneNumber);
+    }
+  }, [currentUser]);
+
+  const addUserToFirestore = async (fullName, email, phoneNumber) => {
     try {
       if (!fullName) {
         throw new Error("Full name is required");
       }
 
-      const userDetailsRef = doc(firestoreDB, "User Details", uid);
+      const userDetailsRef = doc(firestoreDB, "User Details", fullName);
 
       await setDoc(userDetailsRef, {
-        uid,
+        uid: currentUser ? currentUser.uid : "",
         fullName,
         email,
         phoneNumber,
       });
-      toast.success("Your Account Created Successfully");
     } catch (error) {
       console.error("Error adding user details: ", error);
-      toast.error("Error adding user details");
     }
   };
 
@@ -43,13 +47,11 @@ const Register = () => {
       if (!isRegistering) {
         setIsRegistering(true);
         try {
-          const userCredential = await doCreateUserWithEmailAndPassword(
-            email,
-            password,
-            fullName
-          );
-          const user = userCredential.user;
-          await addUserToFirestore(user.uid, fullName, email, phoneNumber);
+          // await doCreateUserWithEmailAndPassword(email, password);
+
+          await doCreateUserWithEmailAndPassword(email, password, fullName);
+          await addUserToFirestore(fullName, email, phoneNumber, driverLicense);
+          toast.success("Your Account Created Successfully");
         } catch (error) {
           setErrorMessage(error.message);
           setIsRegistering(false);
@@ -64,7 +66,7 @@ const Register = () => {
     <>
       {userLoggedIn && <Navigate to={"/home"} replace={true} />}
       <main className="w-full min-h-[110vh] flex justify-end place-content-center place-items-center bg-slate-100">
-        <div className="w-[50%] mix-blend-darken">
+      <div className="w-[50%] mix-blend-darken">
           <img src="/register.jpg" alt="" />
         </div>
         <div className="w-[50%] text-gray-600 space-y-5 p-4 mt-20">
