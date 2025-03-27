@@ -180,9 +180,6 @@
 
 // export default Login;
 
-
-
-
 import React, { useState } from "react";
 import { Navigate, Link } from "react-router-dom";
 import {
@@ -218,6 +215,7 @@ const Login = () => {
     if (!isSigningIn) {
       setIsSigningIn(true);
       doSignInWithGoogle().catch((err) => {
+        toast.error(`Google Sign-In failed: ${err.message}`);
         setIsSigningIn(false);
       });
     }

@@ -8,10 +8,15 @@ import CreateRide from "./components/pages/CreateRide/CreateRide";
 import Rides from "./components/pages/Rides/Rides";
 import DriverPortal from "./components/pages/Driver/Driver";
 
-import { AuthProvider } from "./contexts/authContext/AuthContext";
+import { AuthProvider, useAuth } from "./contexts/authContext/AuthContext";
 import { useRoutes } from "react-router-dom";
+import { useEffect } from "react";
+import { handleGoogleRedirectResult } from "./firebase/auth";
+import toast from "react-hot-toast";
 
 function App() {
+  const { setCurrentUser } = useAuth();
+
   const routesArray = [
     {
       path: "*",
@@ -51,6 +56,20 @@ function App() {
     },
   ];
   let routesElement = useRoutes(routesArray);
+
+  useEffect(() => {
+    handleGoogleRedirectResult()
+      .then((result) => {
+        if (result) {
+          console.log("Logged in:", result.user);
+          setCurrentUser(result.user); // Update auth context
+        }
+      })
+      .catch((error) => {
+        console.error("Redirect Error:", error);
+        toast.error(`Login failed: ${error.message}`);
+      });
+  }, []);
 
   return (
     <AuthProvider>

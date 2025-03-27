@@ -8,6 +8,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   updateProfile,
+  signInWithRedirect,
+  getRedirectResult,
 } from "firebase/auth";
 
 // export const doCreateUserWithEmailAndPassword = async (email, password) => {
@@ -37,7 +39,25 @@ export const doSignInWithEmailAndPassword = (email, password) => {
 
 export const doSignInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider);
+  try {
+    await signInWithRedirect(auth, provider);
+    // Note: The result is handled after redirect, not here
+  } catch (error) {
+    console.error("Google Sign-In Error:", error.message, error.code);
+    throw error;
+  }
+};
+
+export const handleGoogleRedirectResult = async () => {
+  try {
+    const result = await getRedirectResult(auth);
+    if (result) {
+      return result;
+    }
+  } catch (error) {
+    console.error("Redirect Result Error:", error.message, error.code);
+    throw error;
+  }
 };
 
 export const doSignOut = () => {
