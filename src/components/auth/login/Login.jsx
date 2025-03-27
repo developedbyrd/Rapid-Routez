@@ -210,16 +210,19 @@ const Login = () => {
     }
   };
 
-  const onGoogleSignIn = (e) => {
+  const onGoogleSignIn = async (e) => {
     e.preventDefault();
     if (!isSigningIn) {
       setIsSigningIn(true);
-      doSignInWithGoogle().catch((err) => {
+      try {
+        await doSignInWithGoogle();
+      } catch (err) {
         toast.error(`Google Sign-In failed: ${err.message}`);
         setIsSigningIn(false);
-      });
+      }
     }
   };
+  
 
   return (
     <div>
@@ -300,7 +303,7 @@ const Login = () => {
               </Link>
             </h1>
           </div>
-          <div className="flex flex-row text-center w-[70%] relative left-[110px] font-apercu">
+          {/* <div className="flex flex-row text-center w-[70%] relative left-[110px] font-apercu">
             <div className="border-b-2 mb-2.5 mr-2 w-[70%] relative"></div>
             <div className="text-sm font-bold w-fit">OR</div>
             <div className="border-b-2 mb-2.5 ml-2 w-[70%] relative"></div>
@@ -347,7 +350,7 @@ const Login = () => {
               </defs>
             </svg>
             {isSigningIn ? "Signing In..." : "Continue with Google"}
-          </button>
+          </button> */}
         </div>
       </main>
     </div>
