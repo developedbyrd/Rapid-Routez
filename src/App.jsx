@@ -62,20 +62,20 @@ function App() {
       .then((result) => {
         if (result) {
           console.log("Logged in:", result.user);
-          setCurrentUser(result.user); // Update auth context
+          setCurrentUser(result.user); // Update context with redirect result
         }
       })
       .catch((error) => {
         console.error("Redirect Error:", error);
         toast.error(`Login failed: ${error.message}`);
       });
-  }, []);
+  }, [setCurrentUser]);
 
   return (
-    <AuthProvider>
+    <>
       <Header />
       <div className="w-full h-screen flex flex-col">{routesElement}</div>
-    </AuthProvider>
+    </>
   );
 }
 

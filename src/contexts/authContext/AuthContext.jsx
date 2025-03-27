@@ -48,11 +48,12 @@ export function AuthProvider({ children }) {
   }
 
   const value = {
-    userLoggedIn,
+    // userLoggedIn,
     isEmailUser,
     isGoogleUser,
     currentUser,
     setCurrentUser,
+    userLoggedIn: !!currentUser,
   };
 
   return (
